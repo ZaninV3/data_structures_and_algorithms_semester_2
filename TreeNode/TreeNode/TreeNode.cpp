@@ -6,7 +6,8 @@
 
 int main() {
 	BinTreeWithFiveNodes <unsigned int>* tree = new BinTreeWithFiveNodes <unsigned int>(4, 6, 7, 8, 9);
-	tree->printNodeValue(2);
+	//tree->printNodeValue(2);
+	
 	tree->~BinTreeWithFiveNodes();
 }
 

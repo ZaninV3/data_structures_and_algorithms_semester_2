@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 // Занин Вячеслав ВМК-21
 
 // Класс узла бинарного дерева
@@ -9,6 +10,7 @@ private:
 	T value;
 
 	// Указатель на предка дерева
+	// Если его значение nullptr, то узел считается корнем дерева
 	TreeNode* parent_node;
 
 	// Указатели на левый и правый узлы
@@ -29,6 +31,7 @@ public:
 		this->left_node = left_node;
 		this->right_node = right_node;
 	}
+
 
 
 	// Возвращает значение узла
@@ -53,6 +56,24 @@ public:
 	TreeNode* getRightNode() const {
 		return this->right_node;
 	}
+
+	// Ищет и возвращает корень дерева
+	// Вне зависимости от того, с какого узла начинается поиск
+	TreeNode* getRoot() {
+		// Пусть этот узел -- корень дерева
+		TreeNode <T>* root = this;
+
+		// Тогда если этот узел не указатель
+		// то переходим к его родителю и продолжаем проверку
+		while (root->getParentNode() != nullptr) {
+			root = root->getParentNode();
+		}
+
+		// Как только нашли корень
+		// возвращаем его
+		return root;
+	}
+
 
 
 	// Изменяет значение value
@@ -80,8 +101,37 @@ public:
 		right_node->setParentNode(this);
 	}
 
+	// Поиск в ширину
+	// Вне зависимости от того, с какого узла начат поиск
+	// Поиск всегда будет начинаться с корня
+	TreeNode* findBreadthFirstSearch(T value) {
+		// Начинаем с корня
+		TreeNode <T>* node = this->getRoot();
 
-	// Деструктор класса
+		// Проверяем корень
+		if (node->getValue() != value) {
+			// Очередь
+			std::vector <TreeNode <T>*> queue;
+
+			// Добавляем левого и правого потомка в очередь
+			queue.push_back(node->getLeftNode);
+			queue.push_back(node->getRightNode);
+
+			// Переменная-счетчик для перебора очереди
+			unsigned int i = 0;
+
+			while (true) {
+				if (queue[i].getValue() != value) {
+
+				}
+			}
+		}
+
+		// Даже если ничего не найдено, возвращаем корень дерева
+		return node;
+	}
+
+	// Деструктор узла дерева
 	~TreeNode() {
 	}
 };
@@ -128,6 +178,24 @@ public:
 		createRelations();
 	}
 
+	// Возвращает узел дерева
+	TreeNode <T1>* getNode(unsigned int index_node) {
+		switch (index_node) {
+		case 0:
+			return node_0;
+		case 1:
+			return node_1;
+		case 2:
+			return node_2;
+		case 3:
+			return node_3;
+		case 4:
+			return node_4;
+		default:
+			break;
+		}
+	}
+
 	// Выводит на экран значение узла
 	void printNodeValue(unsigned int index_node) {
 		switch (index_node) {
@@ -151,7 +219,7 @@ public:
 		}
 	}
 
-	// Деструктор класса
+	// Деструктор дерева из 5 узлов
 	~BinTreeWithFiveNodes() {
 		node_0->~TreeNode();
 		node_1->~TreeNode();
